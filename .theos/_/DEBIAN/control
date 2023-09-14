@@ -1,0 +1,13 @@
+Package: com.haxi0.roothidepatcher
+Name: RootHide Patcher
+Depends: firmware (>= 15.0)
+Description: patch rootless package to roothide, not work for all packages.
+Maintainer: RootHide
+Author: haxi0
+Section: Utilities
+Icon: https://github.com/RootHide/RootHidePatcher/blob/master/derootifier-2-modified.png?raw=true
+Depiction: https://github.com/RootHide/RootHideManagerApp
+Support: https://github.com/RootHide/RootHideManagerApp
+Architecture: iphoneos-arm64e
+Version: 0.1-5+debug
+Installed-Size: 3008

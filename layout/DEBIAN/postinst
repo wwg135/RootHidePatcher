@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chown 0:0 /Applications/RootHidePatcher.app/RootHidePatcher
+chmod +s /Applications/RootHidePatcher.app/RootHidePatcher

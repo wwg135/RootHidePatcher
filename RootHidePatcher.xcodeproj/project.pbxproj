@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6DCF8E3029EA9E6F00D55A37 /* Derootifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Derootifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RootHidePatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DCF8E3329EA9E6F00D55A37 /* DerootifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerootifierApp.swift; sourceTree = "<group>"; };
 		6DCF8E3529EA9E6F00D55A37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6DCF8E3729EA9E7100D55A37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		6DCF8E3129EA9E6F00D55A37 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6DCF8E3029EA9E6F00D55A37 /* Derootifier.app */,
+				6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,9 +119,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6DCF8E2F29EA9E6F00D55A37 /* Derootifier */ = {
+		6DCF8E2F29EA9E6F00D55A37 /* RootHidePatcher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6DCF8E3E29EA9E7100D55A37 /* Build configuration list for PBXNativeTarget "Derootifier" */;
+			buildConfigurationList = 6DCF8E3E29EA9E7100D55A37 /* Build configuration list for PBXNativeTarget "RootHidePatcher" */;
 			buildPhases = (
 				6DCF8E2C29EA9E6F00D55A37 /* Sources */,
 				6DCF8E2D29EA9E6F00D55A37 /* Frameworks */,
@@ -131,13 +131,13 @@
 			);
 			dependencies = (
 			);
-			name = Derootifier;
+			name = RootHidePatcher;
 			packageProductDependencies = (
 				6DCF8E4229EA9E8A00D55A37 /* AuxiliaryExecute */,
 				6DE2089829F5B80A0053E93D /* FluidGradient */,
 			);
 			productName = Derootifier;
-			productReference = 6DCF8E3029EA9E6F00D55A37 /* Derootifier.app */;
+			productReference = 6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -155,7 +155,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6DCF8E2B29EA9E6F00D55A37 /* Build configuration list for PBXProject "Derootifier" */;
+			buildConfigurationList = 6DCF8E2B29EA9E6F00D55A37 /* Build configuration list for PBXProject "RootHidePatcher" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -172,7 +172,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6DCF8E2F29EA9E6F00D55A37 /* Derootifier */,
+				6DCF8E2F29EA9E6F00D55A37 /* RootHidePatcher */,
 			);
 		};
 /* End PBXProject section */
@@ -331,7 +331,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Derootifier/Preview Content\"";
-				DEVELOPMENT_TEAM = A999YUQPG2;
+				DEVELOPMENT_TEAM = 49LJ27SG38;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -346,7 +346,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.Derootifier;
+				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.roothidepatcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -365,7 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Derootifier/Preview Content\"";
-				DEVELOPMENT_TEAM = A999YUQPG2;
+				DEVELOPMENT_TEAM = 49LJ27SG38;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -380,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.Derootifier;
+				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.roothidepatcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -394,7 +394,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6DCF8E2B29EA9E6F00D55A37 /* Build configuration list for PBXProject "Derootifier" */ = {
+		6DCF8E2B29EA9E6F00D55A37 /* Build configuration list for PBXProject "RootHidePatcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6DCF8E3C29EA9E7100D55A37 /* Debug */,
@@ -403,7 +403,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6DCF8E3E29EA9E7100D55A37 /* Build configuration list for PBXNativeTarget "Derootifier" */ = {
+		6DCF8E3E29EA9E7100D55A37 /* Build configuration list for PBXNativeTarget "RootHidePatcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6DCF8E3F29EA9E7100D55A37 /* Debug */,
