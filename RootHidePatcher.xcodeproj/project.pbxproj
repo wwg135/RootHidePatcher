@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RootHidePatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DCF8E3029EA9E6F00D55A37 /* RHPatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RHPatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DCF8E3329EA9E6F00D55A37 /* DerootifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerootifierApp.swift; sourceTree = "<group>"; };
 		6DCF8E3529EA9E6F00D55A37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6DCF8E3729EA9E7100D55A37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		6DCF8E3129EA9E6F00D55A37 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */,
+				6DCF8E3029EA9E6F00D55A37 /* RHPatcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,7 +137,7 @@
 				6DE2089829F5B80A0053E93D /* FluidGradient */,
 			);
 			productName = Derootifier;
-			productReference = 6DCF8E3029EA9E6F00D55A37 /* RootHidePatcher.app */;
+			productReference = 6DCF8E3029EA9E6F00D55A37 /* RHPatcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -347,7 +347,7 @@
 				);
 				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.roothidepatcher;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RHPatcher;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -381,7 +381,7 @@
 				);
 				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.haxi0.roothidepatcher;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RHPatcher;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
