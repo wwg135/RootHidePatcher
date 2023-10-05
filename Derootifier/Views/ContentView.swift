@@ -9,34 +9,68 @@ import SwiftUI
 import FluidGradient
 
 struct ContentView: View {
-    let scriptPath = Bundle.main.path(forResource: "repack-rootless", ofType: "sh")!
+    let scriptPath = Bundle.main.path(forResource: "patch", ofType: "sh")!
     @AppStorage("firstLaunch") private var firstLaunch = true
     @State private var showingSheet = false
     @State private var selectedFile: URL?
-    @State private var outputAux = ""
+    @State private var requiredRootHidePatches: Bool = false
+
     
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
+                
+                if let debfile = selectedFile {
+                    Text(debfile.lastPathComponent)
+                    .padding(10)
+                    .opacity(0.5)
+                }
+                
                 Button("Select .deb file") {
+                    UISelectionFeedbackGenerator().selectionChanged()
                     showingSheet.toggle()
                 }
                 .buttonStyle(TintedButton(color: .white, fullwidth: true))
+                .padding(20)
                 
-                if let selectedFile = selectedFile {
+                if let debfile = selectedFile {
                     Button("Convert .deb") {
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
                         UIApplication.shared.alert(title: "Converting...", body: "Please wait", withButton: false)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            outputAux = repackDeb(scriptPath: scriptPath, debURL: selectedFile)
+                            
+                            let name = debfile.deletingPathExtension().lastPathComponent.replacingOccurrences(of: "arm64", with: "arm64e").replacingOccurrences(of: " ", with: "_")
+                            
+                            let output = URL.init(fileURLWithPath: "/var/mobile/RootHidePatcher/\(name).deb")
+                            
+                            let (success,outputAux) = repackDeb(scriptPath: scriptPath, debURL: debfile, outputURL: output)
+                            
                             UIApplication.shared.dismissAlert(animated: false)
+                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                UIApplication.shared.confirmAlert(title: "Done", body: outputAux, onOK: {
-                                    checkFileMngrs()
-                                }, noCancel: false)
+                                if success {
+                                    selectedFile = nil
+                                    UIApplication.shared.confirmAlert(title: "Done", body: outputAux+"\nPress <OK> to view deb file.", onOK: {
+                                        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+                                        checkFileMngrs(path: output.path)
+                                    }, noCancel: false)
+                                } else {
+                                    UIApplication.shared.alert(title: "Error", body: outputAux)
+                                }
                             }
                         }
                     }
                     .buttonStyle(TintedButton(color: .white, fullwidth: true))
+                }
+                
+
+                if let debfile = selectedFile {
+                    Toggle("Required RootHidePatches", isOn: $requiredRootHidePatches)
+                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                        .foregroundColor(.white.opacity(0.9))
+                        .frame(width: 270)
+                        .padding(35)
+                        .disabled(true)
                 }
                 
                 NavigationLink(
@@ -46,11 +80,11 @@ struct ContentView: View {
                             Text("Credits")
                             Image(systemName: "chevron.right")
                         }
-                        .foregroundColor(.white.opacity(0.5))
+                        .foregroundColor(.white.opacity(0.8))
                         .font(.system(size: 15))
                     }
                 )
-                .padding()
+                .padding(50)
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -63,10 +97,10 @@ struct ContentView: View {
             )
             .ignoresSafeArea()
             .onAppear {
-                if firstLaunch {
-                    UIApplication.shared.alert(title: "Warning", body: "Please make sure the following packages are installed: dpkg, file, fakeroot, odcctools, ldid (from Procursus).")
-                    firstLaunch = false
-                }
+//                if firstLaunch {
+//                    UIApplication.shared.alert(title: "Warning", body: "Please make sure the following packages are installed: dpkg, file, odcctools, ldid (from Procursus).")
+//                    firstLaunch = false
+//                }
 #if !targetEnvironment(simulator)
                 folderCheck()
 #endif

@@ -47,7 +47,7 @@ extension UIApplication {
                 topController = presentedViewController
             }
             
-            topController.present(alert, animated: true)
+            topController.present(alert, animated: false)
             // topController should now be your topmost view controller
         }
     }

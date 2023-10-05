@@ -1,4 +1,4 @@
 #!/bin/sh
 
-chown 0:0 /Applications/RHPatcher.app/RHPatcher
-chmod +s /Applications/RHPatcher.app/RHPatcher
+chown 0:0 /Applications/Patcher.app/Patcher
+chmod +s /Applications/Patcher.app/Patcher

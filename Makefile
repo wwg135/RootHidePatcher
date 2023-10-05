@@ -3,7 +3,7 @@ TARGET = iphone:latest:15.0
 DEB_ARCH = iphoneos-arm64e
 IPHONEOS_DEPLOYMENT_TARGET = 15.0
 
-INSTALL_TARGET_PROCESSES = RootHidePatcher
+INSTALL_TARGET_PROCESSES = Patcher
 
 THEOS_PACKAGE_SCHEME = roothide
 
@@ -26,3 +26,6 @@ include $(THEOS_MAKE_PATH)/xcodeproj.mk
 clean::
 	rm -rf ./packages/*
 
+
+after-install::
+	install.exec 'uiopen -b com.roothide.patcher'
