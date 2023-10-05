@@ -1,6 +1,6 @@
 Package: com.roothide.patcher
 Name: RootHide Patcher
-Version: 0.3
+Version: 0.4
 Architecture: iphoneos-arm64e
 Depends: firmware (>= 15.0), odcctools, ldid, file, dpkg, gawk
 Description: patch rootless package to roothide, not work for all packages.
