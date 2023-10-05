@@ -32,6 +32,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
         
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            NSLog("RootHidePatcher: documentPicker=\(urls)")
             guard let selectedFileURL = urls.first else { return }
             let fileManager = FileManager.default
             

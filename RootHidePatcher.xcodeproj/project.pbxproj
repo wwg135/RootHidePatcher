@@ -11,7 +11,6 @@
 		6DCF8E3629EA9E6F00D55A37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCF8E3529EA9E6F00D55A37 /* ContentView.swift */; };
 		6DCF8E3829EA9E7100D55A37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DCF8E3729EA9E7100D55A37 /* Assets.xcassets */; };
 		6DCF8E3B29EA9E7100D55A37 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DCF8E3A29EA9E7100D55A37 /* Preview Assets.xcassets */; };
-		6DCF8E4329EA9E8A00D55A37 /* AuxiliaryExecute in Frameworks */ = {isa = PBXBuildFile; productRef = 6DCF8E4229EA9E8A00D55A37 /* AuxiliaryExecute */; };
 		6DCF8E4829EAB03000D55A37 /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCF8E4729EAB03000D55A37 /* Alert++.swift */; };
 		6DE2082729EB2E940053E93D /* ShellScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2082629EB2E940053E93D /* ShellScript.swift */; };
 		6DE2082C29EB3E990053E93D /* TintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2082B29EB3E990053E93D /* TintedButton.swift */; };
@@ -22,8 +21,11 @@
 		842F706B2ACC3847002E5574 /* patch.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6DCF8E4429EA9F5D00D55A37 /* patch.sh */; };
 		842F706E2ACC3974002E5574 /* libroothide.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842F706D2ACC3974002E5574 /* libroothide.tbd */; };
 		842F70742ACDC6DC002E5574 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 842F70712ACDC6DC002E5574 /* Makefile */; };
-		842F70752ACDC6DC002E5574 /* entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 842F70722ACDC6DC002E5574 /* entitlements.plist */; };
-		842F70762ACDC6DC002E5574 /* control in Resources */ = {isa = PBXBuildFile; fileRef = 842F70732ACDC6DC002E5574 /* control */; };
+		842F70782ACE4385002E5574 /* roothide.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 842F70772ACE4286002E5574 /* roothide.entitlements */; };
+		842F70812ACEC1BB002E5574 /* AuxiliaryExecute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */; };
+		842F70832ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */; };
+		842F70852ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */; };
+		842F70872ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,14 @@
 		842F70712ACDC6DC002E5574 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		842F70722ACDC6DC002E5574 /* entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entitlements.plist; sourceTree = "<group>"; };
 		842F70732ACDC6DC002E5574 /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
+		842F70772ACE4286002E5574 /* roothide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = roothide.entitlements; sourceTree = "<group>"; };
+		842F70792ACEAB82002E5574 /* postinst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = postinst; path = layout/DEBIAN/postinst; sourceTree = "<group>"; };
+		842F707B2ACEB823002E5574 /* RootHidePatcher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RootHidePatcher-Info.plist"; sourceTree = "<group>"; };
+		842F707F2ACEC18B002E5574 /* AuxiliaryExecute */ = {isa = PBXFileReference; lastKnownFileType = text; path = AuxiliaryExecute; sourceTree = SOURCE_ROOT; };
+		842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuxiliaryExecute.swift; path = AuxiliaryExecute/Sources/AuxiliaryExecute/AuxiliaryExecute.swift; sourceTree = "<group>"; };
+		842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuxiliaryExecute+Async.swift"; path = "AuxiliaryExecute/Sources/AuxiliaryExecute/AuxiliaryExecute+Async.swift"; sourceTree = "<group>"; };
+		842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuxiliaryExecute+Shell.swift"; path = "AuxiliaryExecute/Sources/AuxiliaryExecute/AuxiliaryExecute+Shell.swift"; sourceTree = "<group>"; };
+		842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuxiliaryExecute+Spawn.swift"; path = "AuxiliaryExecute/Sources/AuxiliaryExecute/AuxiliaryExecute+Spawn.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				842F706E2ACC3974002E5574 /* libroothide.tbd in Frameworks */,
-				6DCF8E4329EA9E8A00D55A37 /* AuxiliaryExecute in Frameworks */,
 				6DE2089929F5B80A0053E93D /* FluidGradient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,6 +73,13 @@
 		6DCF8E2729EA9E6F00D55A37 = {
 			isa = PBXGroup;
 			children = (
+				842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */,
+				842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */,
+				842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */,
+				842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */,
+				842F707C2ACEC0DB002E5574 /* Packages */,
+				842F707B2ACEB823002E5574 /* RootHidePatcher-Info.plist */,
+				842F70792ACEAB82002E5574 /* postinst */,
 				842F70732ACDC6DC002E5574 /* control */,
 				842F70722ACDC6DC002E5574 /* entitlements.plist */,
 				842F70712ACDC6DC002E5574 /* Makefile */,
@@ -71,6 +87,7 @@
 				842F706D2ACC3974002E5574 /* libroothide.tbd */,
 				842F706C2ACC3973002E5574 /* roothide.h */,
 				6DCF8E4429EA9F5D00D55A37 /* patch.sh */,
+				842F70772ACE4286002E5574 /* roothide.entitlements */,
 				6DCF8E3229EA9E6F00D55A37 /* Derootifier */,
 				6DCF8E3129EA9E6F00D55A37 /* Products */,
 			);
@@ -87,6 +104,7 @@
 		6DCF8E3229EA9E6F00D55A37 /* Derootifier */ = {
 			isa = PBXGroup;
 			children = (
+				842F707F2ACEC18B002E5574 /* AuxiliaryExecute */,
 				6DE2082829EB30DC0053E93D /* Views */,
 				6DE2082529EB2E7B0053E93D /* Support */,
 				6DCF8E4629EAB02300D55A37 /* Extensions */,
@@ -133,6 +151,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		842F707C2ACEC0DB002E5574 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,7 +175,6 @@
 			);
 			name = RootHidePatcher;
 			packageProductDependencies = (
-				6DCF8E4229EA9E8A00D55A37 /* AuxiliaryExecute */,
 				6DE2089829F5B80A0053E93D /* FluidGradient */,
 			);
 			productName = Derootifier;
@@ -182,7 +206,6 @@
 			);
 			mainGroup = 6DCF8E2729EA9E6F00D55A37;
 			packageReferences = (
-				6DCF8E4129EA9E8A00D55A37 /* XCRemoteSwiftPackageReference "AuxiliaryExecute" */,
 				6DE2089729F5B80A0053E93D /* XCRemoteSwiftPackageReference "FluidGradient" */,
 			);
 			productRefGroup = 6DCF8E3129EA9E6F00D55A37 /* Products */;
@@ -199,10 +222,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842F70752ACDC6DC002E5574 /* entitlements.plist in Resources */,
+				842F70782ACE4385002E5574 /* roothide.entitlements in Resources */,
 				842F706B2ACC3847002E5574 /* patch.sh in Resources */,
 				6DCF8E3B29EA9E7100D55A37 /* Preview Assets.xcassets in Resources */,
-				842F70762ACDC6DC002E5574 /* control in Resources */,
 				6DCF8E3829EA9E7100D55A37 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +236,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842F70872ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift in Sources */,
+				842F70852ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift in Sources */,
+				842F70832ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift in Sources */,
+				842F70812ACEC1BB002E5574 /* AuxiliaryExecute.swift in Sources */,
 				842F70742ACDC6DC002E5574 /* Makefile in Sources */,
 				6DCF8E3629EA9E6F00D55A37 /* ContentView.swift in Sources */,
 				6DE2082C29EB3E990053E93D /* TintedButton.swift in Sources */,
@@ -354,6 +380,7 @@
 				DEVELOPMENT_TEAM = 49LJ27SG38;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RootHidePatcher-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -393,6 +420,7 @@
 				DEVELOPMENT_TEAM = 49LJ27SG38;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RootHidePatcher-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -445,14 +473,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6DCF8E4129EA9E8A00D55A37 /* XCRemoteSwiftPackageReference "AuxiliaryExecute" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Lakr233/AuxiliaryExecute";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		6DE2089729F5B80A0053E93D /* XCRemoteSwiftPackageReference "FluidGradient" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Cindori/FluidGradient";
@@ -464,11 +484,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6DCF8E4229EA9E8A00D55A37 /* AuxiliaryExecute */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6DCF8E4129EA9E8A00D55A37 /* XCRemoteSwiftPackageReference "AuxiliaryExecute" */;
-			productName = AuxiliaryExecute;
-		};
 		6DE2089829F5B80A0053E93D /* FluidGradient */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6DE2089729F5B80A0053E93D /* XCRemoteSwiftPackageReference "FluidGradient" */;

@@ -7,16 +7,29 @@ ECHO="echo -e"
 
 set -e
 
+if [ $(whoami) != "root" ]; then
+    $ECHO "Please run as root user (sudo)."
+    exit 1;
+fi
+
 if ! type dpkg-deb >/dev/null 2>&1; then
 	$ECHO "Please install dpkg-deb."
+    exit 1;
 fi
 
 if ! type file >/dev/null 2>&1; then
 	$ECHO "Please install file."
+    exit 1;
+fi
+
+if ! type awk >/dev/null 2>&1; then
+    $ECHO "Please install awk."
+    exit 1;
 fi
 
 if ! ldid 2>&1 | grep -q procursus; then
 	$ECHO "Please install Procursus ldid."
+    exit 1;
 fi
 
 
@@ -74,6 +87,7 @@ find "$TEMPDIR_NEW" -type f | while read -r file; do
     fi
     $ECHO -n "resign..."
     $LDID -s "$file"
+    $LDID -M -S$(dirname $0)/roothide.entitlements "$file"
     $ECHO "~ok."
     varjbstr=$(strings - "$file" | grep /var/jb || true)
   else
@@ -99,6 +113,7 @@ OUTPUT_PATH="/var/mobile/RootHidePatcher/$DEB_PACKAGE"_"$DEB_VERSION"_"$DEB_ARCH
 
 if [ ! -z "$2" ]; then OUTPUT_PATH=$2; fi;
 
+find "$TEMPDIR_NEW" -name ".DS_Store" -delete
 dpkg-deb -Zzstd -b "$TEMPDIR_NEW" "$OUTPUT_PATH"
 
 ### Real script end

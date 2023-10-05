@@ -5,7 +5,7 @@
 //  Created by Анохин Юрий on 15.04.2023.
 //
 
-import AuxiliaryExecute
+//import AuxiliaryExecute
 import UIKit
 
 func repackDeb(scriptPath: String, debURL: URL, outputURL: URL) -> (Bool,String) {
@@ -44,7 +44,7 @@ func checkFileMngrs(path: String) {
         if UIApplication.shared.canOpenURL(URL(string: "santander://")!) {
             UIApplication.shared.open(URL(string: "santander://\(pathe)")!)
         } else {
-            UIApplication.shared.alert(title: "Aw... :(", body: "jbroot:\(path)", withButton: true)
+            UIApplication.shared.alert(title: "Aw... :(", body: "\(pathe)", withButton: true)
         }
     }
 }

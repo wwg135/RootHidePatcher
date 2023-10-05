@@ -14,9 +14,14 @@ struct ContentView: View {
     @State private var showingSheet = false
     @State private var selectedFile: URL?
     @State private var requiredRootHidePatches: Bool = false
-
     
     var body: some View {
+        
+        let _ = NotificationCenter.default.addObserver(forName:Notification.Name("patcherFileOpen"), object: nil, queue: nil) { noti in
+            NSLog("RootHidePatcher: patcherFileOpen: \(noti)")
+            selectedFile = noti.object as? URL
+        }
+        
         NavigationView {
             VStack(spacing: 10) {
                 
@@ -64,11 +69,11 @@ struct ContentView: View {
                 }
                 
 
-                if let debfile = selectedFile {
-                    Toggle("Required RootHidePatches", isOn: $requiredRootHidePatches)
+                if let _ = selectedFile {
+                    Toggle("Required RootHide Dynamic Patches", isOn: $requiredRootHidePatches)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
-                        .frame(width: 270)
+                        .frame(width: 350)
                         .padding(35)
                         .disabled(true)
                 }
@@ -110,6 +115,7 @@ struct ContentView: View {
             }
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

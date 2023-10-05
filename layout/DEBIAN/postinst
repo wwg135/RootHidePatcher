@@ -1,4 +1,8 @@
 #!/bin/sh
 
-chown 0:0 /Applications/Patcher.app/Patcher
-chmod +s /Applications/Patcher.app/Patcher
+#chown 0:0 /Applications/Patcher.app/Patcher
+#chmod +s /Applications/Patcher.app/Patcher
+
+#downgrade from root to mobile
+chown -R mobile:mobile /var/mobile/RootHidePatcher/
+chown -R mobile:mobile /var/tmp/com.roothide.patcher-Inbox/
