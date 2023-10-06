@@ -36,15 +36,11 @@ func folderCheck() {
 
 func checkFileMngrs(path: String) {
     NSLog("RootHidePatcher: \(path)")
-    let pathe = jbroot(path) //.replacingOccurrences(of: " ", with: "%20")
+    let pathe = jbroot(path).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
     NSLog("RootHidePatcher: \(pathe)")
     if UIApplication.shared.canOpenURL(URL(string: "filza://")!) {
-        UIApplication.shared.open(URL(string: "filza://\(pathe)")!)
+        UIApplication.shared.open(URL(string: "filza://view\(pathe)")!)
     } else {
-        if UIApplication.shared.canOpenURL(URL(string: "santander://")!) {
-            UIApplication.shared.open(URL(string: "santander://\(pathe)")!)
-        } else {
-            UIApplication.shared.alert(title: "Aw... :(", body: "\(pathe)", withButton: true)
-        }
+        UIApplication.shared.alert(title: "converted deb file", body: "\(pathe)", withButton: true)
     }
 }

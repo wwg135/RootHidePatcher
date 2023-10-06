@@ -44,7 +44,7 @@ struct ContentView: View {
                         UIApplication.shared.alert(title: "Converting...", body: "Please wait", withButton: false)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             
-                            let name = debfile.deletingPathExtension().lastPathComponent.replacingOccurrences(of: "arm64", with: "arm64e").replacingOccurrences(of: " ", with: "_")
+                            let name = debfile.deletingPathExtension().lastPathComponent.replacingOccurrences(of: "arm64", with: "arm64e")
                             
                             let output = URL.init(fileURLWithPath: "/var/mobile/RootHidePatcher/\(name).deb")
                             

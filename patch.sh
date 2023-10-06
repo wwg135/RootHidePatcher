@@ -115,6 +115,7 @@ if [ ! -z "$2" ]; then OUTPUT_PATH=$2; fi;
 
 find "$TEMPDIR_NEW" -name ".DS_Store" -delete
 dpkg-deb -Zzstd -b "$TEMPDIR_NEW" "$OUTPUT_PATH"
+chown mobile:mobile "$OUTPUT_PATH"
 
 ### Real script end
 

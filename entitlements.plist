@@ -35,5 +35,12 @@
 	<true/>
 	<key>com.apple.private.security.container-required</key>
 	<false/>
+	    <!-- Prevent weird sharesheet CoreImage crash -->
+    <key>com.apple.security.iokit-user-client-class</key>
+    <array>
+        <string>AGXDeviceUserClient</string>
+        <string>IOHDIXControllerUserClient</string>
+        <string>IOSurfaceRootUserClient</string>
+    </array>
 </dict>
 </plist>
