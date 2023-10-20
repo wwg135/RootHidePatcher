@@ -13,13 +13,22 @@ struct ContentView: View {
     @AppStorage("firstLaunch") private var firstLaunch = true
     @State private var showingSheet = false
     @State private var selectedFile: URL?
-    @State private var requiredRootHidePatches: Bool = false
+    @State private var simpleTweak: Bool = true
+    @State private var usingRootlessCompat: Bool = false
+    @State private var requireDynamicPatches: Bool = false
+    
+    func resetPatches() {
+        simpleTweak = true
+        usingRootlessCompat = false
+        requireDynamicPatches = false
+    }
     
     var body: some View {
         
         let _ = NotificationCenter.default.addObserver(forName:Notification.Name("patcherFileOpen"), object: nil, queue: nil) { noti in
             NSLog("RootHidePatcher: patcherFileOpen: \(noti)")
             selectedFile = noti.object as? URL
+            resetPatches()
         }
         
         NavigationView {
@@ -27,7 +36,7 @@ struct ContentView: View {
                 
                 if let debfile = selectedFile {
                     Text(debfile.lastPathComponent)
-                    .padding(10)
+                    .padding(30)
                     .opacity(0.5)
                 }
                 
@@ -36,7 +45,7 @@ struct ContentView: View {
                     showingSheet.toggle()
                 }
                 .buttonStyle(TintedButton(color: .white, fullwidth: true))
-                .padding(20)
+                .padding(5)
                 
                 if let debfile = selectedFile {
                     Button("Convert .deb") {
@@ -48,17 +57,20 @@ struct ContentView: View {
                             
                             let output = URL.init(fileURLWithPath: "/var/mobile/RootHidePatcher/\(name).deb")
                             
-                            let (success,outputAux) = repackDeb(scriptPath: scriptPath, debURL: debfile, outputURL: output)
+                            var patch=""
+                            if usingRootlessCompat { patch="AutoPatches" } else if requireDynamicPatches { patch="DynamicPatches" }
+                            let (success,outputAux) = repackDeb(scriptPath: scriptPath, debURL: debfile, outputURL: output, patch: patch)
                             
                             UIApplication.shared.dismissAlert(animated: false)
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                 if success {
+                                    resetPatches()
                                     selectedFile = nil
                                     UIApplication.shared.confirmAlert(title: "Done", body: outputAux+"\nPress <OK> to view deb file.", onOK: {
                                         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                                         checkFileMngrs(path: output.path)
-                                    }, noCancel: false)
+                                    }, noCancel: true)
                                 } else {
                                     UIApplication.shared.alert(title: "Error", body: outputAux)
                                 }
@@ -66,16 +78,44 @@ struct ContentView: View {
                         }
                     }
                     .buttonStyle(TintedButton(color: .white, fullwidth: true))
+                    .padding(30)
                 }
                 
 
                 if let _ = selectedFile {
-                    Toggle("Required RootHide Dynamic Patches", isOn: $requiredRootHidePatches)
+                    Toggle("Directly Convert Simple Tweaks", isOn: $simpleTweak)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
-                        .frame(width: 350)
-                        .padding(35)
-                        .disabled(true)
+                        .frame(width: 320)
+                        .padding(5)
+                        .disabled(false).onChange(of: simpleTweak) { value in
+                            if value {
+                                usingRootlessCompat = false
+                                requireDynamicPatches = false
+                            }
+                        }
+                    Toggle("Using Rootless Compat Layer", isOn: $usingRootlessCompat)
+                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                        .foregroundColor(.white.opacity(0.9))
+                        .frame(width: 320)
+                        .padding(5)
+                        .disabled(false).onChange(of: usingRootlessCompat) { value in
+                            if value {
+                                simpleTweak = false
+                                requireDynamicPatches = false
+                            }
+                        }
+                    Toggle("Require Dynamic Patches", isOn: $requireDynamicPatches)
+                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                        .foregroundColor(.white.opacity(0.9))
+                        .frame(width: 320)
+                        .padding(5)
+                        .disabled(false).onChange(of: requireDynamicPatches) { value in
+                            if value {
+                                simpleTweak = false
+                                usingRootlessCompat = false
+                            }
+                        }
                 }
                 
                 NavigationLink(

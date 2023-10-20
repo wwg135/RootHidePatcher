@@ -8,11 +8,11 @@
 //import AuxiliaryExecute
 import UIKit
 
-func repackDeb(scriptPath: String, debURL: URL, outputURL: URL) -> (Bool,String) {
+func repackDeb(scriptPath: String, debURL: URL, outputURL: URL, patch: String) -> (Bool,String) {
     var output = ""
     let command = jbroot("/usr/bin/bash")
     let env = ["PATH": "/usr/bin:$PATH"]
-    let args = ["-p", rootfs(scriptPath), debURL.path, outputURL.path]
+    let args = ["-p", rootfs(scriptPath), debURL.path, outputURL.path, patch]
 
 //    assert(setuid(0) == 0)
 
@@ -36,11 +36,14 @@ func folderCheck() {
 
 func checkFileMngrs(path: String) {
     NSLog("RootHidePatcher: \(path)")
-    let pathe = jbroot(path).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
-    NSLog("RootHidePatcher: \(pathe)")
-    if UIApplication.shared.canOpenURL(URL(string: "filza://")!) {
-        UIApplication.shared.open(URL(string: "filza://view\(pathe)")!)
-    } else {
-        UIApplication.shared.alert(title: "converted deb file", body: "\(pathe)", withButton: true)
-    }
+    let activity = UIActivityViewController(activityItems: [URL(fileURLWithPath: jbroot(path))], applicationActivities: nil)
+    UIApplication.shared.present(alert: activity)
+    
+//    let pathe = jbroot(path).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
+//    NSLog("RootHidePatcher: \(pathe)")
+//    if UIApplication.shared.canOpenURL(URL(string: "filza://")!) {
+//        UIApplication.shared.open(URL(string: "filza://view\(pathe)")!)
+//    } else {
+//        UIApplication.shared.alert(title: "converted deb file", body: "\(pathe)", withButton: true)
+//    }
 }
