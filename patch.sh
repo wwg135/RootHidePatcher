@@ -78,10 +78,19 @@ if [ ! -d "$TEMPDIR_OLD/var/jb" ] || [ $DEB_ARCH != "iphoneos-arm64" ]; then
     exit 1;
 fi
 
-cp -a "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
-cp -a "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/
-rm -rf "$TEMPDIR_NEW"/var/jb
-rmdir "$TEMPDIR_NEW"/var >/dev/null 2>&1 || true
+mv -f "$TEMPDIR_OLD"/DEBIAN "$TEMPDIR_NEW"/
+mv -f "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
+rmdir -p "$TEMPDIR_OLD"/var/jb >/dev/null 2>&1 || true
+if [ "$(ls $TEMPDIR_OLD)" != "" ]; then
+    mkdir "$TEMPDIR_NEW"/rootfs
+    mv -f "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/rootfs/
+fi
+# some packages have both /var/jb/var/xxx and /var/xxx, same file same name
+if [ ! -z "$3" ]; then
+    mkdir -p "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror
+    rsync -a "$TEMPDIR_NEW"/ "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/ --exclude /var/mobile/Library/pkgmirror
+    mv "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN.$DEB_PACKAGE
+fi
 
 lsrpath() {
     otool -l "$@" |
@@ -143,7 +152,9 @@ find "$TEMPDIR_NEW" -type f | while read -r file; do
     fi
     if [ "${fname##*.}" == "plist" ]; then
         plutil -convert xml1 "$file" >/dev/null
-        if [[ {/Library/libSandy,/Library/LaunchDaemons} =~ $(dirname "$fpath") ]]; then
+        if [[ {/Library/LaunchDaemons} =~ $(dirname "$fpath") ]]; then
+            $SED -i 's|/var/jb/|/|g' "$file"
+        elif [[ {/Library/libSandy} =~ $(dirname "$fpath") ]]; then
             $SED -i 's|/var/jb/|/-var/jb/-|g' "$file"
             $SED -i 's|/var/jb|/-var/jb-|g' "$file"
                     
@@ -175,9 +186,6 @@ done
 
     
 if [ ! -z "$3" ]; then
-    mkdir -p "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror
-    cp -a "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/
-    mv "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN.$DEB_PACKAGE
     cp "$TEMPDIR_NEW"/DEBIAN/*.roothidepatch "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN.$DEB_PACKAGE/ >/dev/null 2>&1 || true
     chown -R 501:501 "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/
     chmod -R 0755 "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/
