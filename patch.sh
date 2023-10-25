@@ -68,19 +68,80 @@ dpkg-deb -R "$1" "$TEMPDIR_OLD"
 chmod -R 755 "$TEMPDIR_OLD"/DEBIAN
 chmod 644 "$TEMPDIR_OLD"/DEBIAN/control
 
-DEB_PACKAGE=$(grep '^Package:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ')
-DEB_VERSION=$(grep '^Version:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ')
-DEB_ARCH=$(grep '^Architecture:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ')
+DEB_PACKAGE=$(grep '^Package:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
+DEB_VERSION=$(grep '^Version:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
+DEB_ARCH=$(grep '^Architecture:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
 
-if [ ! -d "$TEMPDIR_OLD/var/jb" ] || [ $DEB_ARCH != "iphoneos-arm64" ]; then
-    $ECHO "*** Not a rootless package!\n\nskipping and exiting cleanly."
+OUTPUT_PATH="$TMPDIR/$DEB_PACKAGE"_"$DEB_VERSION"_"iphoneos-arm64e".deb
+if [ ! -z "$2" ]; then OUTPUT_PATH=$2; fi;
+
+
+### Derootifier Script ##################################
+Derootifier() {
+
+    mv -f "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/
+    
+    find "$TEMPDIR_NEW" -type f | while read -r file; do
+      fname=$(basename "$file")
+      fpath=/$(realpath --relative-base="$TEMPDIR_NEW" "$file")
+      if file -ib "$file" | grep -q "x-mach-binary; charset=binary"; then
+        $ECHO "=> $fpath"
+        $ECHO -n "patch..."
+        otool -L "$file" | tail -n +2 | cut -d' ' -f1 | tr -d "[:blank:]" > "$TEMPDIR_OLD"/._lib_cache
+        if [ -f "$TEMPDIR_OLD"/._lib_cache ]; then
+            cat "$TEMPDIR_OLD"/._lib_cache | while read line; do
+                if echo "$line" | grep -q ^/usr/lib/ ; then
+                    install_name_tool -change "$line" @rpath/"${line#/usr/lib/}" "$file"
+                elif echo "$line" | grep -q ^/Library/Frameworks/ ; then
+                    install_name_tool -change "$line" @rpath/"${line#/Library/Frameworks/}" "$file"
+                fi
+            done
+        fi
+        install_name_tool -add_rpath "/usr/lib" "$file"
+        install_name_tool -add_rpath "@loader_path/.jbroot/usr/lib" "$file"
+        install_name_tool -add_rpath "/Library/Frameworks" "$file" >/dev/null
+        install_name_tool -add_rpath "@loader_path/.jbroot/Library/Frameworks" "$file"
+
+        $ECHO -n "resign..."
+        $LDID -M "-S$(dirname $(realpath $0))/roothide.entitlements" "$file"
+        $ECHO "~ok."
+      fi
+    done
+    
+    
+    $SED -i '/^$/d' "$TEMPDIR_NEW"/DEBIAN/control
+    $SED -i 's|iphoneos-arm|iphoneos-arm64e|g' "$TEMPDIR_NEW"/DEBIAN/control
+
+
+    find "$TEMPDIR_NEW" -name ".DS_Store" -delete
+    dpkg-deb -Zzstd -b "$TEMPDIR_NEW" "$OUTPUT_PATH"
+    chown 501:501 "$OUTPUT_PATH"
+
+    ### Real script end
+
+    $ECHO "\nfinished. cleaning up..."
+
+    if [ "$(sw_vers -productName)" != "macOS" ]; then
+        rm -rf "$TEMPDIR_OLD" "$TEMPDIR_NEW"
+        rm -f $1
+    fi
+
+}
+####################################################################
+
+if [ $DEB_ARCH == "iphoneos-arm" ] && [ -z "$3" ]; then
+    Derootifier $@
+    exit 0
+elif [ ! -d "$TEMPDIR_OLD/var/jb" ] || [ $DEB_ARCH != "iphoneos-arm64" ]; then
+    $ECHO "$DEB_ARCH\n*** Not a rootless package!\n\nskipping and exiting cleanly."
     rm -rf "$TEMPDIR_OLD" "$TEMPDIR_NEW"
     exit 1;
 fi
 
 mv -f "$TEMPDIR_OLD"/DEBIAN "$TEMPDIR_NEW"/
 mv -f "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
-rmdir -p "$TEMPDIR_OLD"/var/jb >/dev/null 2>&1 || true
+rmdir "$TEMPDIR_OLD"/var/jb
+rmdir "$TEMPDIR_OLD"/var >/dev/null 2>&1 || true
 if [ "$(ls $TEMPDIR_OLD)" != "" ]; then
     mkdir "$TEMPDIR_NEW"/rootfs
     mv -f "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/rootfs/
@@ -101,7 +162,7 @@ lsrpath() {
     ' | sort | uniq
 }
 
-find "$TEMPDIR_NEW" -type f | while read -r file; do
+find "$TEMPDIR_NEW" -path "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror -prune -o -type f | while read -r file; do
   fixedpaths=""
   fname=$(basename "$file")
   fpath=/$(realpath --relative-base="$TEMPDIR_NEW" "$file")
@@ -210,9 +271,6 @@ if [ "$PreDepends" != "" ]; then
     fi
 fi
 
-OUTPUT_PATH="$TMPDIR/$DEB_PACKAGE"_"$DEB_VERSION"_"iphoneos-arm64e".deb
-
-if [ ! -z "$2" ]; then OUTPUT_PATH=$2; fi;
 
 find "$TEMPDIR_NEW" -name ".DS_Store" -delete
 dpkg-deb -Zzstd -b "$TEMPDIR_NEW" "$OUTPUT_PATH"
@@ -226,3 +284,4 @@ if [ "$(sw_vers -productName)" != "macOS" ]; then
     rm -rf "$TEMPDIR_OLD" "$TEMPDIR_NEW"
     rm -f $1
 fi
+
