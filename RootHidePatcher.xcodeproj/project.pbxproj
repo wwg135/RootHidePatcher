@@ -17,15 +17,15 @@
 		6DE2082E29EB3F230053E93D /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2082D29EB3F230053E93D /* MaterialView.swift */; };
 		6DE2083229EB46850053E93D /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2083129EB46850053E93D /* DocumentPicker.swift */; };
 		6DE2088C29F591160053E93D /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE2088B29F591160053E93D /* CreditsView.swift */; };
-		6DE2089929F5B80A0053E93D /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 6DE2089829F5B80A0053E93D /* FluidGradient */; };
+		6DE2089929F5B80A0053E93D /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 6DE2089829F5B80A0053E93D /* FluidGradient */; settings = {ATTRIBUTES = (Required, ); }; };
 		842F706B2ACC3847002E5574 /* patch.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6DCF8E4429EA9F5D00D55A37 /* patch.sh */; };
-		842F706E2ACC3974002E5574 /* libroothide.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842F706D2ACC3974002E5574 /* libroothide.tbd */; settings = {ATTRIBUTES = (Required, ); }; };
 		842F70742ACDC6DC002E5574 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 842F70712ACDC6DC002E5574 /* Makefile */; };
 		842F70782ACE4385002E5574 /* roothide.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 842F70772ACE4286002E5574 /* roothide.entitlements */; };
 		842F70812ACEC1BB002E5574 /* AuxiliaryExecute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */; };
 		842F70832ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */; };
 		842F70852ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */; };
 		842F70872ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */; };
+		84B37E0B2AFF65B600B2400E /* libroothide.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842F706D2ACC3974002E5574 /* libroothide.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,8 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842F706E2ACC3974002E5574 /* libroothide.tbd in Frameworks */,
 				6DE2089929F5B80A0053E93D /* FluidGradient in Frameworks */,
+				84B37E0B2AFF65B600B2400E /* libroothide.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +90,7 @@
 				842F70772ACE4286002E5574 /* roothide.entitlements */,
 				6DCF8E3229EA9E6F00D55A37 /* Derootifier */,
 				6DCF8E3129EA9E6F00D55A37 /* Products */,
+				84AB4B952AFE896D00F74439 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,6 +157,13 @@
 			children = (
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		84AB4B952AFE896D00F74439 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,9 +389,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RootHidePatcher-Info.plist";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -421,9 +429,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RootHidePatcher-Info.plist";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

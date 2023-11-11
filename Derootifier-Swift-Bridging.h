@@ -8,7 +8,13 @@
 #ifndef Derootifier_Swift_Bridging_h
 #define Derootifier_Swift_Bridging_h
 
+#include <Foundation/Foundation.h>
+
+#if TARGET_IPHONE_SIMULATOR
+#include "stub.h"
+#else
 #include "roothide.h"
+#endif
 
 #import <spawn.h>
 

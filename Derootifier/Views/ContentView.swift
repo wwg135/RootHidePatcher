@@ -13,13 +13,13 @@ struct ContentView: View {
     @AppStorage("firstLaunch") private var firstLaunch = true
     @State private var showingSheet = false
     @State private var selectedFile: URL?
-    @State private var simpleTweak: Bool = true
-    @State private var usingRootlessCompat: Bool = false
+    @State private var simpleTweak: Bool = false
+    @State private var usingRootlessCompat: Bool = true
     @State private var requireDynamicPatches: Bool = false
     
     func resetPatches() {
-        simpleTweak = true
-        usingRootlessCompat = false
+        simpleTweak = false
+        usingRootlessCompat = true
         requireDynamicPatches = false
     }
     
@@ -27,17 +27,18 @@ struct ContentView: View {
         
         let _ = NotificationCenter.default.addObserver(forName:Notification.Name("patcherFileOpen"), object: nil, queue: nil) { noti in
             NSLog("RootHidePatcher: patcherFileOpen: \(noti)")
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
             selectedFile = noti.object as? URL
             resetPatches()
         }
         
-        NavigationView {
+        //NavigationView {
             VStack(spacing: 10) {
                 
                 if let debfile = selectedFile {
                     Text(debfile.lastPathComponent)
-                    .padding(30)
-                    .opacity(0.5)
+                        .padding(30)
+                        .opacity(0.5)
                 }
                 
                 Button("Select .deb file") {
@@ -81,12 +82,12 @@ struct ContentView: View {
                     .padding(30)
                 }
                 
-
+                
                 if let _ = selectedFile {
                     Toggle("Directly Convert Simple Tweaks", isOn: $simpleTweak)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
-                        .frame(width: 320)
+                        .frame(width: 350)
                         .padding(5)
                         .disabled(false).onChange(of: simpleTweak) { value in
                             if value {
@@ -97,7 +98,7 @@ struct ContentView: View {
                     Toggle("Using Rootless Compat Layer", isOn: $usingRootlessCompat)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
-                        .frame(width: 320)
+                        .frame(width: 350)
                         .padding(5)
                         .disabled(false).onChange(of: usingRootlessCompat) { value in
                             if value {
@@ -108,7 +109,7 @@ struct ContentView: View {
                     Toggle("Require Dynamic Patches", isOn: $requireDynamicPatches)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
-                        .frame(width: 320)
+                        .frame(width: 350)
                         .padding(5)
                         .disabled(false).onChange(of: requireDynamicPatches) { value in
                             if value {
@@ -142,10 +143,10 @@ struct ContentView: View {
             )
             .ignoresSafeArea()
             .onAppear {
-//                if firstLaunch {
-//                    UIApplication.shared.alert(title: "Warning", body: "Please make sure the following packages are installed: dpkg, file, odcctools, ldid (from Procursus).")
-//                    firstLaunch = false
-//                }
+                //                if firstLaunch {
+                //                    UIApplication.shared.alert(title: "Warning", body: "Please make sure the following packages are installed: dpkg, file, odcctools, ldid (from Procursus).")
+                //                    firstLaunch = false
+                //                }
 #if !targetEnvironment(simulator)
                 folderCheck()
 #endif
@@ -154,8 +155,7 @@ struct ContentView: View {
                 DocumentPicker(selectedFile: $selectedFile)
             }
         }
-    }
-    
+    //}
 }
 
 struct ContentView_Previews: PreviewProvider {

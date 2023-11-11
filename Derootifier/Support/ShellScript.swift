@@ -37,6 +37,14 @@ func folderCheck() {
 func checkFileMngrs(path: String) {
     NSLog("RootHidePatcher: \(path)")
     let activity = UIActivityViewController(activityItems: [URL(fileURLWithPath: jbroot(path))], applicationActivities: nil)
+    
+    let window = UIApplication.shared.windows[0] //same as Alert++
+
+    // don't touch this for ipad
+    activity.popoverPresentationController?.sourceView = window
+    activity.popoverPresentationController?.sourceRect = CGRect(x: window.bounds.midX, y: window.bounds.height, width: 0, height: 0)
+    activity.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+    
     UIApplication.shared.present(alert: activity)
     
 //    let pathe = jbroot(path).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!

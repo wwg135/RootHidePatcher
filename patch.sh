@@ -45,8 +45,13 @@ if ! ldid 2>&1 | grep -q procursus; then
 fi
 
 
-if [ -z "$1" ] || ! file "$1" | grep -q "Debian binary package" ; then
+if [ -z "$1" ]; then
     $ECHO "Usage: $0 /path/to/deb [/path/to/output] [DynamicPatches|AutoPatches]"
+    exit 1;
+fi
+
+if ! file "$1" | grep -q "Debian binary package" ; then
+    $ECHO "*** Not a valid package!"
     exit 1;
 fi
 
@@ -132,17 +137,20 @@ Derootifier() {
 if [ $DEB_ARCH == "iphoneos-arm" ] && [ -z "$3" ]; then
     Derootifier $@
     exit 0
-elif [ ! -d "$TEMPDIR_OLD/var/jb" ] || [ $DEB_ARCH != "iphoneos-arm64" ]; then
+elif [ $DEB_ARCH != "iphoneos-arm64" ]; then
     $ECHO "$DEB_ARCH\n*** Not a rootless package!\n\nskipping and exiting cleanly."
     rm -rf "$TEMPDIR_OLD" "$TEMPDIR_NEW"
     exit 1;
 fi
 
 mv -f "$TEMPDIR_OLD"/DEBIAN "$TEMPDIR_NEW"/
-mv -f "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
-rmdir "$TEMPDIR_OLD"/var/jb
+if [ -d "$TEMPDIR_OLD/var/jb" ]; then
+    mv -f "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
+    rmdir "$TEMPDIR_OLD"/var/jb
+fi
 rmdir "$TEMPDIR_OLD"/var >/dev/null 2>&1 || true
-if [ "$(ls $TEMPDIR_OLD)" != "" ]; then
+rootfsfiles=$(ls "$TEMPDIR_OLD")
+if [ ! -z "$rootfsfiles" ]; then
     mkdir "$TEMPDIR_NEW"/rootfs
     mv -f "$TEMPDIR_OLD"/* "$TEMPDIR_NEW"/rootfs/
 fi
@@ -162,7 +170,7 @@ lsrpath() {
     ' | sort | uniq
 }
 
-find "$TEMPDIR_NEW" -path "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror -prune -o -type f | while read -r file; do
+find "$TEMPDIR_NEW" -type f \! -path "*/var/mobile/Library/pkgmirror/*" \! -path "*.lproj/*" | while read -r file; do
   fixedpaths=""
   fname=$(basename "$file")
   fpath=/$(realpath --relative-base="$TEMPDIR_NEW" "$file")
