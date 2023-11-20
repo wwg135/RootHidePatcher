@@ -5,12 +5,14 @@ shopt -s dotglob
 
 LDID="ldid -Hsha256"
 ECHO="echo -e"
+FIND="find"
 SED="sed"
 
 if [ "$(sw_vers -productName)" == "macOS" ]; then
 export TMPDIR=$(dirname "$1")
 LOG() { $ECHO "$@\n"; }
 SED="gsed"
+FIND="gfind"
 else
 LOG() { return; }
 #LOG() { $ECHO "$@\n"; }
@@ -144,6 +146,18 @@ elif [ $DEB_ARCH != "iphoneos-arm64" ]; then
 fi
 
 mv -f "$TEMPDIR_OLD"/DEBIAN "$TEMPDIR_NEW"/
+
+#dpkg-deb -c "$1" > "$TEMPDIR_NEW"/DEBIAN/list
+#$SED -i -E 's|^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+||g' "$TEMPDIR_NEW"/DEBIAN/list
+#$SED -i -E 's|^(\.\/)?|/|g' "$TEMPDIR_NEW"/DEBIAN/list
+#$SED -i -E '1s|^\/$|/.|'  "$TEMPDIR_NEW"/DEBIAN/list
+#
+#if [ ! -e "$TEMPDIR_NEW"/DEBIAN/md5sums ]; then
+#    cd "$TEMPDIR_OLD"
+#    eval md5sum $($FIND "$TEMPDIR_OLD" -type f -printf "\"%P\"\n") > "$TEMPDIR_NEW"/DEBIAN/md5sums  #E2BIG on ios
+#    cd -
+#fi
+
 if [ -d "$TEMPDIR_OLD/var/jb" ]; then
     mv -f "$TEMPDIR_OLD"/var/jb/* "$TEMPDIR_NEW"/
     rmdir "$TEMPDIR_OLD"/var/jb
@@ -161,6 +175,8 @@ if [ ! -z "$3" ]; then
     mv "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN "$TEMPDIR_NEW"/var/mobile/Library/pkgmirror/DEBIAN.$DEB_PACKAGE
 fi
 
+#rm -f "$TEMPDIR_NEW"/DEBIAN/list "$TEMPDIR_NEW"/DEBIAN/md5sums
+
 lsrpath() {
     otool -l "$@" |
     awk '
@@ -170,7 +186,8 @@ lsrpath() {
     ' | sort | uniq
 }
 
-find "$TEMPDIR_NEW" -type f \! -path "*/var/mobile/Library/pkgmirror/*" \! -path "*.lproj/*" | while read -r file; do
+find "$TEMPDIR_NEW" -type f -size +0c \! -path "*/var/mobile/Library/pkgmirror/*" \! -path "*.lproj/*" \! -path "*.png" \! -path "*.svg" \! -path "*.strings" | while read -r file; do
+  LOG "$file"
   fixedpaths=""
   fname=$(basename "$file")
   fpath=/$(realpath --relative-base="$TEMPDIR_NEW" "$file")
@@ -215,6 +232,8 @@ find "$TEMPDIR_NEW" -type f \! -path "*/var/mobile/Library/pkgmirror/*" \! -path
         $SED -i 's| /lib/| /rootfs/lib/|g' "$file"
         $SED -i 's| /usr/| /rootfs/usr/|g' "$file"
         $SED -i 's| /var/| /rootfs/var/|g' "$file"
+        
+        $SED -i '1s|^#!\s*\/rootfs\/|#! \/|' "$file"  #revert shebang
                                                 
         $SED -i 's|/-var/jb/-|/|g' "$file"
         $SED -i 's|/-var/jb-|/var/jb|g' "$file"

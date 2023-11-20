@@ -73,12 +73,8 @@
 		6DCF8E2729EA9E6F00D55A37 = {
 			isa = PBXGroup;
 			children = (
-				842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */,
-				842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */,
-				842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */,
-				842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */,
-				842F707C2ACEC0DB002E5574 /* Packages */,
 				842F707B2ACEB823002E5574 /* RootHidePatcher-Info.plist */,
+				84B37E152AFFBB8B00B2400E /* AuxiliaryExecute */,
 				842F70792ACEAB82002E5574 /* postinst */,
 				842F70732ACDC6DC002E5574 /* control */,
 				842F70722ACDC6DC002E5574 /* entitlements.plist */,
@@ -152,18 +148,22 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		842F707C2ACEC0DB002E5574 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		84AB4B952AFE896D00F74439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84B37E152AFFBB8B00B2400E /* AuxiliaryExecute */ = {
+			isa = PBXGroup;
+			children = (
+				842F70862ACEC1C7002E5574 /* AuxiliaryExecute+Spawn.swift */,
+				842F70842ACEC1C3002E5574 /* AuxiliaryExecute+Shell.swift */,
+				842F70822ACEC1BF002E5574 /* AuxiliaryExecute+Async.swift */,
+				842F70802ACEC1BB002E5574 /* AuxiliaryExecute.swift */,
+			);
+			name = AuxiliaryExecute;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
