@@ -78,6 +78,14 @@ chmod 644 "$TEMPDIR_OLD"/DEBIAN/control
 DEB_PACKAGE=$(grep '^Package:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
 DEB_VERSION=$(grep '^Version:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
 DEB_ARCH=$(grep '^Architecture:' "$TEMPDIR_OLD"/DEBIAN/control | cut -f2 -d ' ' | tr -d '\n\r')
+DEB_MAINTAINER=$(grep '^Maintainer:' "$TEMPDIR_OLD"/DEBIAN/control | $SED -E 's/^Maintainer:\s*//' | tr -d '\n\r')
+
+# not tweaks
+if [[ {ellekit,oldabi} =~ "$DEB_PACKAGE" ]] || [ "$DEB_MAINTAINER" == "Procursus Team <support@procurs.us>" ]; then
+    $ECHO "*** Not a tweak package!\ncontact @RootHideDev to update it.\n\nskipping and exiting cleanly."
+    rm -rf "$TEMPDIR_OLD" "$TEMPDIR_NEW"
+    exit 1;
+fi
 
 OUTPUT_PATH="$TMPDIR/$DEB_PACKAGE"_"$DEB_VERSION"_"iphoneos-arm64e".deb
 if [ ! -z "$2" ]; then OUTPUT_PATH=$2; fi;
