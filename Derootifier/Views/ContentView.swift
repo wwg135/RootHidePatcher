@@ -41,7 +41,7 @@ struct ContentView: View {
                         .opacity(0.5)
                 }
                 
-                Button("Select .deb file") {
+                Button("选择转换的.deb插件") {
                     UISelectionFeedbackGenerator().selectionChanged()
                     showingSheet.toggle()
                 }
@@ -49,9 +49,9 @@ struct ContentView: View {
                 .padding(5)
                 
                 if let debfile = selectedFile {
-                    Button("Convert .deb") {
+                    Button("确定转换") {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
-                        UIApplication.shared.alert(title: "Converting...", body: "Please wait", withButton: false)
+                        UIApplication.shared.alert(title: "正在转换...", body: "请等待...", withButton: false)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             
                             let name = debfile.deletingPathExtension().lastPathComponent.replacingOccurrences(of: "iphoneos-arm64", with: "-a-r-c-h-").replacingOccurrences(of: "iphoneos-arm", with: "-a-r-c-h-").replacingOccurrences(of: "-a-r-c-h-", with: "iphoneos-arm64e")
@@ -68,12 +68,12 @@ struct ContentView: View {
                                 if success {
                                     resetPatches()
                                     selectedFile = nil
-                                    UIApplication.shared.confirmAlert(title: "Done", body: outputAux+"\nPress <OK> to view deb file.", onOK: {
+                                    UIApplication.shared.confirmAlert(title: "完成", body: outputAux+"\n请按下<好的>按钮查看deb文件.", onOK: {
                                         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                                         checkFileMngrs(path: output.path)
                                     }, noCancel: true)
                                 } else {
-                                    UIApplication.shared.alert(title: "Error", body: outputAux)
+                                    UIApplication.shared.alert(title: "错误", body: outputAux)
                                 }
                             }
                         }
@@ -84,7 +84,7 @@ struct ContentView: View {
                 
                 
                 if let _ = selectedFile {
-                    Toggle("Directly Convert Simple Tweaks", isOn: $simpleTweak)
+                    Toggle("直接转换简单插件", isOn: $simpleTweak)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
                         .frame(width: 350)
@@ -95,7 +95,7 @@ struct ContentView: View {
                                 requireDynamicPatches = false
                             }
                         }
-                    Toggle("Using Rootless Compat Layer", isOn: $usingRootlessCompat)
+                    Toggle("仅使用无根兼容层", isOn: $usingRootlessCompat)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
                         .frame(width: 350)
@@ -106,7 +106,7 @@ struct ContentView: View {
                                 requireDynamicPatches = false
                             }
                         }
-                    Toggle("Require Dynamic Patches", isOn: $requireDynamicPatches)
+                    Toggle("需要动态修补程序", isOn: $requireDynamicPatches)
                         .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                         .foregroundColor(.white.opacity(0.9))
                         .frame(width: 350)
@@ -123,7 +123,7 @@ struct ContentView: View {
                     destination: CreditsView(),
                     label: {
                         HStack {
-                            Text("Credits")
+                            Text("感谢")
                             Image(systemName: "chevron.right")
                         }
                         .foregroundColor(.white.opacity(0.8))
@@ -142,15 +142,6 @@ struct ContentView: View {
                 .background(.green)
             )
             .ignoresSafeArea()
-            .onAppear {
-                //                if firstLaunch {
-                //                    UIApplication.shared.alert(title: "Warning", body: "Please make sure the following packages are installed: dpkg, file, odcctools, ldid (from Procursus).")
-                //                    firstLaunch = false
-                //                }
-#if !targetEnvironment(simulator)
-                folderCheck()
-#endif
-            }
             .sheet(isPresented: $showingSheet) {
                 DocumentPicker(selectedFile: $selectedFile)
             }
