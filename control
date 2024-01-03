@@ -3,7 +3,7 @@ Name: RootHide Patcher
 Version: 1.5
 Architecture: iphoneos-arm64e
 Depends: firmware (>= 15.0), odcctools, ldid, file, dpkg, gawk, plutil(>= 0.2.2-1), rsync
-Description: patch rootless package to roothide, not work for all packages.
+Description: 一款将无根插件转换的roothide插件的程序，由M哥编译汉化.
 Maintainer: RootHide
 Author: RootHide
 Section: Utilities
