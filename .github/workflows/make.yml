@@ -57,4 +57,4 @@ jobs:
           latest: true
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
-           *.deb
+           ./packages/com.roothide.patcher_1.5-1+debug_iphoneos-arm64e.deb
