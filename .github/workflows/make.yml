@@ -1,0 +1,60 @@
+name: Build and Package
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+env:
+  VERSION: '1.6'
+
+jobs:
+  build:
+    name: Build Bootstrap
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+
+      - name: Setup Environment
+        run: echo "THEOS=~/theos" >> $GITHUB_ENV
+
+      - name: Set env
+        run: |
+          sT=$(TZ=UTC-8 date +'%S')
+          echo "msT=$(date -j -f "%Y-%m-%d %H:%M:%S" "$(TZ=UTC-8 date +'%Y-%m-%d %H:%M'):${sT}" +%s)" >> $GITHUB_ENV
+          echo "logT=$(TZ=UTC-8 date +'%Y年%m月%d %H:%M'):${sT}" >> $GITHUB_ENV
+
+      - name: Print env
+        run: |
+          echo ${{ env.VERSION }}
+          echo ${{ env.msT }}
+          echo ${{ env.logT }}
+
+      - name: Pre body
+        run: |
+          echo -e "更新时间：${{ env.logT }}" >> release.txt
+          echo -e "> - RootHidePatcher中文简体汉化插件，转换为roothide插件专用." >> release.txt
+
+      - name: Build deb
+        run: make package
+
+      - name: Release deb
+        uses: softprops/action-gh-release@v1
+        with:
+          name: RootHidePatcher_${{ env.VERSION }}
+          tag_name: ${{ env.msT }}
+          target_commitish: master
+          body_path: release.txt
+          latest: true
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          files: |
+           *.deb
